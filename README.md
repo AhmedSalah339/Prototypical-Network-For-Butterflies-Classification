@@ -1,10 +1,10 @@
-# Butterflies Classification with Prototypical Network
+## Butterflies Classification with Prototypical Network
 
-### Quickstart
+## Quickstart
 
 - Install the requirements using `pip install -r requirements.txt`
 - place your photos to be predicted in the test examples folder
-- run the following command
+- run the following command:
 ```bash
 $ python predict.py -ex TestExamples --hybrid_model_weights checkpoints\best_model_95val_82tr.pth
 ```
@@ -12,14 +12,14 @@ $ python predict.py -ex TestExamples --hybrid_model_weights checkpoints\best_mod
 - Classes Numbers correspond to the numbers in the [Butterflies200 Dataset](https://www.dropbox.com/sh/3p4x1oc5efknd69/AABwnyoH2EKi6H9Emcyd0pXCa?dl=0) in 
 the "images_small" folder - 1
 
-### Table of contents
+## Table of contents
 1. [Overview](#overview)
 2. [Usage](#usage)
 3. [Results](#results)
 4. [Approach](#approach)
 5. [Credits](#credits)
 
-### Overview
+## Overview
 
 This respiratory contains a solution for a common problem of class imbalance. 
 The Butterfly200Dataset contains two main problems:
@@ -66,9 +66,9 @@ This output of the first 2 layers from this ResNet was used to generate features
 
 
 
-### Usage
+## Usage
 
-#### Training
+### Training
 
 To start download the [Butterflies200 Dataset](https://www.dropbox.com/sh/3p4x1oc5efknd69/AABwnyoH2EKi6H9Emcyd0pXCa?dl=0) and place it in a folder named 
 "Data".
@@ -85,7 +85,7 @@ If you want to use the weights of a whole hybrid model as a start of the trainin
 ```bash
 $ python train.py --freeze_encoder --hybrid_model_weights <weights path> --split_path <split dictionary path> -lr 0.0001  --cuda
 ```
-#### Calculate Means
+### Calculate Means
 
 After training and before the prediction, the means vectors of the classes must be calculated (using the training examples), to do that use:
 ```bash
@@ -93,14 +93,14 @@ $ python construct_classes_means.py --hybrid_model_weights <weights path> --save
 ```
 
 
-#### Prediction
+### Prediction
 To predict a set of examples place them in a folder and ensure they all have the same suffix, then use
 
 ```bash
 $ python predict.py -ex <folder name> --hybrid_model_weights <weights path> --suffix *.jpg
 ```
 
-#### Notes
+### Notes
 
 A split dictionary is a dictionary with train, val, test keys with each having a list of all the corresponding samples paths.
 
@@ -108,17 +108,17 @@ You can refer to the notebook in "Notebooks\Splitting\TrainTestSplitHybrid.ipynb
 
 For faster training, the main preprocessing can be done using "Notebooks\DatasetPreperation\prepare_dataset.ipynp" to generate a ".pt" for loading (no augmentation will be performed in that case).
 
-### Results
+## Results
 
 The model achieved 91% accuracy on the total dataset with 71% minimum accuracy per class.
 
 To improve classes with low accuracy a hand split for these classes samples were done (can be found in "Notebooks\Splitting\TrainTestSplitHybrid.ipynb").
 
-#### TSNE
+### TSNE
 ![TSNE](https://user-images.githubusercontent.com/59888340/184493365-988de032-7258-4beb-9222-a5541d68e017.PNG)
 
 
-### Approach
+## Approach
 
 1. A pre-trained ResNet is finetuned on classes with more than 400 samples as a sub-classification task.
 
@@ -137,7 +137,7 @@ This data-centric method was able to get these classes from about 50% accuracy t
 
 This way takes a lot of time but it is very effective. There are still classes that need to be dealt with the same way if you want to increase the performance.
 
-### Credits
+## Credits
 
 The Prototypical  Network implementation is used from [Prototypical-Networks-for-Few-shot-Learning-PyTorch](https://github.com/orobix/Prototypical-Networks-for-Few-shot-Learning-PyTorch)
 
