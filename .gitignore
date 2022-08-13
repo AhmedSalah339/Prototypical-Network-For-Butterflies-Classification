@@ -1,4 +1,6 @@
-Notebooks
+Notebooks/Analysis
+Notebooks/*.ipynb
+Notebooks/.ipynb_checkpoints
 base_exp
 temp_exp
 exp
