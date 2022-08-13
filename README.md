@@ -10,7 +10,7 @@ python predict.py -ex TestExamples --hybrid_model_weights checkpoints\best_model
 ```
 - Results will be written into results.csv
 - Classes Numbers correspond to the numbers in the [Butterflies200 Dataset](https://www.dropbox.com/sh/3p4x1oc5efknd69/AABwnyoH2EKi6H9Emcyd0pXCa?dl=0) in 
-the "images_small" folder
+the "images_small" folder - 1
 
 ### Overview
 
