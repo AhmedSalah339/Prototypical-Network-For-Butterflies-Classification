@@ -19,6 +19,22 @@ The Butterfly200Dataset contains two main problems:
 
 - It contains 200 classes with a number of examples per class that ranges from 30 samples to 800 samples.
 - The single class contains male and female Butterflies each with underwing and upper wing views (many variants per class). 
+<p>
+    <em>Upper Wing Timelaea albescens</em>
+</p>
+<p>
+    <img src="https://user-images.githubusercontent.com/59888340/184493509-7205bbff-8609-444a-8053-19c270225278.jpg" alt>
+</p>
+
+<p>
+    <em>Under Wing Timelaea albescens</em>
+</p>
+<p>
+    <img src="https://user-images.githubusercontent.com/59888340/184493515-6b705cce-0519-4c82-ac13-f1dabb9beb4e.jpg" alt>
+</p>
+
+
+
 
 - In such situations, a normal discriminative model can learn to perfectly classify the classes with big numbers of examples while not being able to
 classify the classes with a small number of examples.
@@ -29,6 +45,14 @@ In this respiratory, a hybrid approach was used where a pre-trained ResNet was f
 
 This output of the first 2 layers from this ResNet was used to generate features for a prototypical network (ProtoNet) to classify the whole 200 classes with above 91% accuracy and at least 71% accuracy per class.
 
+<div style="text-align: center; padding: 10px";height:1px;>
+    <p>
+        <em>Claases acuracy histogram</em>
+    </p>
+    <img src="https://user-images.githubusercontent.com/59888340/184493172-7019b7f3-e8d4-4032-be7c-d9553d246712.PNG" width="50%" style="max-width: 100px; margin: auto"/>
+</div>
+
+
 
 ### Table of contents
 1. [Usage](#usage)
@@ -37,10 +61,6 @@ This output of the first 2 layers from this ResNet was used to generate features
 4. [Credits](#credits)
 
 
-
-<div style="text-align: center; padding: 10px">
-    <img src="link" width="100%" style="max-width: 300px; margin: auto"/>
-</div>
 
 
 ### Usage
@@ -85,6 +105,9 @@ For faster training, the main preprocessing can be done using "Notebooks\Dataset
 The model achieved 91% accuracy on the total dataset with 71% minimum accuracy per class.
 
 To improve classes with low accuracy a hand split for these classes samples were done (can be found in "Notebooks\Splitting\TrainTestSplitHybrid.ipynb").
+
+#### TSNE
+![TSNE](https://user-images.githubusercontent.com/59888340/184493365-988de032-7258-4beb-9222-a5541d68e017.PNG)
 
 
 ### Approach
