@@ -6,11 +6,18 @@
 - place your photos to be predicted in the test examples folder
 - run the following command
 ```bash
-python predict.py -ex TestExamples --hybrid_model_weights checkpoints\best_model_95val_82tr.pth
+$ python predict.py -ex TestExamples --hybrid_model_weights checkpoints\best_model_95val_82tr.pth
 ```
 - Results will be written into results.csv
 - Classes Numbers correspond to the numbers in the [Butterflies200 Dataset](https://www.dropbox.com/sh/3p4x1oc5efknd69/AABwnyoH2EKi6H9Emcyd0pXCa?dl=0) in 
 the "images_small" folder - 1
+
+### Table of contents
+1. [Overview](#overview)
+2. [Usage](#usage)
+3. [Results](#results)
+4. [Approach](#approach)
+5. [Credits](#credits)
 
 ### Overview
 
@@ -54,48 +61,49 @@ This output of the first 2 layers from this ResNet was used to generate features
 
 
 
-### Table of contents
-1. [Usage](#usage)
-2. [Results](#results)
-3. [Approach](#approach)
-4. [Credits](#credits)
+
 
 
 
 
 ### Usage
+
+#### Training
+
 To start download the [Butterflies200 Dataset](https://www.dropbox.com/sh/3p4x1oc5efknd69/AABwnyoH2EKi6H9Emcyd0pXCa?dl=0) and place it in a folder named 
 "Data".
 
-* For training the hybrid model using the pre-trained ResNet model
-```bash
-python train.py --freeze_encoder --enc_weights <weights path> --split_path <split dictionary path>  -lr 0.0001  --cuda
-```
+For training the hybrid model using the pre-trained ResNet model. 
+
 You can use "checkpoints\best_model_embed_res.pth" for the weights and "configs\splits\split_dict_hybrid_clust.pkl" for the split dictionary path.
 
-
-
-* If you want to use the weights of a whole hybrid model as a start of the training you can use
 ```bash
-python train.py --freeze_encoder --hybrid_model_weights <weights path> --split_path <split dictionary path> -lr 0.0001  --cuda
+$ python train.py --freeze_encoder --enc_weights <weights path> --split_path <split dictionary path>  -lr 0.0001  --cuda
 ```
 
-* After training and before the prediction, the means vectors of the classes must be calculated, to do that use
+If you want to use the weights of a whole hybrid model as a start of the training you can use
 ```bash
-python construct_classes_means.py --hybrid_model_weights <weights path> --save_path <means saving path> --split_path <split dictionary path>  --no_precache
+$ python train.py --freeze_encoder --hybrid_model_weights <weights path> --split_path <split dictionary path> -lr 0.0001  --cuda
 ```
-The training examples are used by default to construct the means vectors for the classes.
+#### Calculate Means
+
+After training and before the prediction, the means vectors of the classes must be calculated (using the training examples), to do that use:
+```bash
+$ python construct_classes_means.py --hybrid_model_weights <weights path> --save_path <means saving path> --split_path <split dictionary path>  --no_precache
+```
 
 
-* To predict a set of examples place them in a folder and ensure they all have the same suffix, then use
+#### Prediction
+To predict a set of examples place them in a folder and ensure they all have the same suffix, then use
 
 ```bash
-python predict.py -ex <folder name> --hybrid_model_weights <weights path> --suffix *.jpg
+$ python predict.py -ex <folder name> --hybrid_model_weights <weights path> --suffix *.jpg
 ```
 
 #### Notes
 
 A split dictionary is a dictionary with train, val, test keys with each having a list of all the corresponding samples paths.
+
 You can refer to the notebook in "Notebooks\Splitting\TrainTestSplitHybrid.ipynb" for an example.
 
 For faster training, the main preprocessing can be done using "Notebooks\DatasetPreperation\prepare_dataset.ipynp" to generate a ".pt" for loading (no augmentation will be performed in that case).
@@ -112,13 +120,13 @@ To improve classes with low accuracy a hand split for these classes samples were
 
 ### Approach
 
-- A pre-trained ResNet is finetuned on classes with more than 400 samples as a sub-classification task.
+1. A pre-trained ResNet is finetuned on classes with more than 400 samples as a sub-classification task.
 
-- Then a hybrid model is made of the first two layers of the ResNet with a Protonet. 
+2. Then a hybrid model is made of the first two layers of the ResNet with a Protonet. 
 
-- The Protonet is trained using the features from the ResNet while the ResNet weights were freezed
+3. The Protonet is trained using the features from the ResNet while the ResNet weights were freezed
 
-- The whole model was finetuned with a low learning rate to get the best results
+4. The whole model was finetuned with a low learning rate to get the best results
 
 The model was performing badly on certain classes (less than 60% accuracy) which degraded the minimum classes' accuracy and the whole accuracy. 
 
